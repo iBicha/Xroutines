@@ -12,30 +12,30 @@ With xRoutines you can:
  * You can add inline `Action` delegate methods 
  * Use `Stop()` to stop it
 
-And here's some simple code code:
+And here's some sample code:
 
 ```javascript
-	void Start () {
-        xRoutine routine = xRoutine.Create()
-            .Append(RoutineMethod1())
-            .WaitForSeconds(0.25f)
-            .Append(RoutineMethod2)
-            .WaitForSeconds(0.25f)
-            .Append(() => { Debug.Log("Execute code on the fly!"); });
-    }
+void Start () {
+    xRoutine routine = xRoutine.Create()
+        .Append(RoutineMethod1())
+        .WaitForSeconds(0.25f)
+        .Append(RoutineMethod2)
+        .WaitForSeconds(0.25f)
+        .Append(() => { Debug.Log("Execute code on the fly!"); });
+}
 
-    //This is an enumerator method, that we can use with coroutines as usual
-    IEnumerator RoutineMethod1()
-    {
-        Debug.Log("Routine Method 1");
-        yield return new WaitForSeconds(0.1f);
-        yield return null;
-    }
-    //this is just a method returning void, that we can also use with coroutines
-    void RoutineMethod2()
-    {
-        Debug.Log("Routine Method 2");
-    }
+//This is an enumerator method, that we can use with coroutines as usual
+IEnumerator RoutineMethod1()
+{
+    Debug.Log("Routine Method 1");
+    yield return new WaitForSeconds(0.1f);
+    yield return null;
+}
+//this is just a method returning void, that we can also use with coroutines
+void RoutineMethod2()
+{
+    Debug.Log("Routine Method 2");
+}
 ```
 
 You can check `Assets/xRoutines/Example` for more options.
