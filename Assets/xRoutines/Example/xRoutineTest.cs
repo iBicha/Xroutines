@@ -35,7 +35,7 @@ public class XroutineTest : MonoBehaviour {
 
         //We can even start another routine, and wait for the previous one to finish.
 		Xroutine.Create()
-            .WaitForXRoutine(routine)
+            .WaitForXroutine(routine)
             .Append(() => { Debug.Log("Routine just finished executing."); })
             .Append(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); });
 
