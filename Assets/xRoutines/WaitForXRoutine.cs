@@ -2,9 +2,9 @@
 
 public class WaitForXRoutine : CustomYieldInstruction
 {
-    private xRoutine routine;
+    private Xroutine routine;
 
-    public WaitForXRoutine(xRoutine routine)
+	public WaitForXRoutine(Xroutine routine)
     {
         this.routine = routine;
     }

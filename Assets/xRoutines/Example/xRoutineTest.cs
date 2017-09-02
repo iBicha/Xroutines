@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class xRoutineTest : MonoBehaviour {
+public class XroutineTest : MonoBehaviour {
 
 	void Start () {
         //create a routine, and chain actions on it
-        xRoutine routine = xRoutine.Create()
+		Xroutine routine = Xroutine.Create()
             .Append(RoutineMethod1())
             .WaitForSeconds(0.25f)
             .Append(RoutineMethod2)
@@ -26,7 +26,7 @@ public class xRoutineTest : MonoBehaviour {
             .Append(() => { Debug.Log("Left click to continue..."); })
             .WaitForMouseDown(0)
             .Append(() => { Debug.Log("Thanks again!"); })
-            .Append(() => { Debug.Log(string.Format("xRoutine is still Running: {0}", routine.IsRunning)); })
+            .Append(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); })
             .Append(() => { Debug.Log("We are going to stop now."); })
             //I will stop it here
             //I can call Stop() from anywhere else for immediate interruption.
@@ -34,10 +34,10 @@ public class xRoutineTest : MonoBehaviour {
             .Append(() => { Debug.Log("This will not be executed"); });
 
         //We can even start another routine, and wait for the previous one to finish.
-        xRoutine.Create()
+		Xroutine.Create()
             .WaitForXRoutine(routine)
             .Append(() => { Debug.Log("Routine just finished executing."); })
-            .Append(() => { Debug.Log(string.Format("xRoutine is still Running: {0}", routine.IsRunning)); });
+            .Append(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); });
 
         //Note: if you call WaitForXRoutine on itself, it will running a task of checking if that task is done. Which will never be.
         //In other words, calling WaitForXRoutine on itself blocks the routine, until Stop() is called somewhere else.

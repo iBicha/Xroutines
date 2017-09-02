@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class xRoutine {
+public class Xroutine {
     private static MonoBehaviour s_monoBehaviour;
     private MonoBehaviour m_monoBehaviour;
     private bool useStaticMonoBehaviour = true;
@@ -19,10 +19,10 @@ public class xRoutine {
             {
                 if (s_monoBehaviour == null)
                 {
-                    GameObject go = new GameObject("{xRoutine}");
+                    GameObject go = new GameObject("{Xroutine}");
                     UnityEngine.Object.DontDestroyOnLoad(go);
                     s_monoBehaviour = go.AddComponent<DummyMonoBehaviour>();
-                    Debug.Log("{xRoutine} singleton created.");
+                    Debug.Log("{Xroutine} singleton created.");
                 }
                 return s_monoBehaviour;
 
@@ -44,9 +44,9 @@ public class xRoutine {
         }
     }
 
-    public static xRoutine Create(MonoBehaviour monoBehaviour = null)
+    public static Xroutine Create(MonoBehaviour monoBehaviour = null)
     {
-        return new xRoutine(monoBehaviour);
+        return new Xroutine(monoBehaviour);
     }
 
     public void Stop()
@@ -56,7 +56,7 @@ public class xRoutine {
         isRunning = false;
     }
 
-    public xRoutine Append(params IEnumerator[] routines)
+    public Xroutine Append(params IEnumerator[] routines)
     {
         for (int i = 0; i < routines.Length; i++)
         {
@@ -65,7 +65,7 @@ public class xRoutine {
         return this;
     }
 
-    public xRoutine Append(IEnumerator routine)
+    public Xroutine Append(IEnumerator routine)
     {
         queue.Enqueue(routine);
         if (!isRunning)
@@ -77,13 +77,13 @@ public class xRoutine {
     }
 
 
-    public xRoutine Append(YieldInstruction yieldInstruction)
+    public Xroutine Append(YieldInstruction yieldInstruction)
     {
         Append(routineYieldInstruction(yieldInstruction));
         return this;
     }
 
-    public xRoutine Append(params Action[] actions)
+    public Xroutine Append(params Action[] actions)
     {
         for (int i = 0; i < actions.Length; i++)
         {
@@ -92,72 +92,72 @@ public class xRoutine {
         return this;
     }
 
-    public xRoutine Append(Action action)
+    public Xroutine Append(Action action)
     {
         Append(routineAction(action));
         return this;
     }
 
-    public xRoutine WaitForSeconds(float seconds)
+    public Xroutine WaitForSeconds(float seconds)
     {
         Append(routineYieldInstruction(new WaitForSeconds(seconds)));
         return this;
     }
-    public xRoutine WaitForSecondsRealtime(float seconds)
+    public Xroutine WaitForSecondsRealtime(float seconds)
     {
         Append(new WaitForSecondsRealtime(seconds));
         return this;
     }
 
-    public xRoutine WaitForEndOfFrame()
+    public Xroutine WaitForEndOfFrame()
     {
         Append(routineYieldInstruction(new WaitForEndOfFrame()));
         return this;
     }
 
-    public xRoutine WaitForFixedUpdate()
+    public Xroutine WaitForFixedUpdate()
     {
         Append(routineYieldInstruction(new WaitForFixedUpdate()));
         return this;
     }
 
-    public xRoutine WaitWhile(Func<bool> predicate)
+    public Xroutine WaitWhile(Func<bool> predicate)
     {
         Append(new WaitWhile(predicate));
         return this;
     }
 
-    public xRoutine WaitUntil(Func<bool> predicate)
+    public Xroutine WaitUntil(Func<bool> predicate)
     {
         Append(new WaitUntil(predicate));
         return this;
     }
 
-    public xRoutine WaitForKeyDown(string name)
+    public Xroutine WaitForKeyDown(string name)
     {
         Append(new WaitForKeyDown(name));
         return this;
     }
 
-    public xRoutine WaitForKeyDown(KeyCode key)
+    public Xroutine WaitForKeyDown(KeyCode key)
     {
         Append(new WaitForKeyDown(key));
         return this;
     }
 
-    public xRoutine WaitForMouseDown(int button)
+    public Xroutine WaitForMouseDown(int button)
     {
         Append(new WaitForMouseDown(button));
         return this;
     }
 
-    public xRoutine WaitForXRoutine(xRoutine routine)
+    public Xroutine WaitForXRoutine(Xroutine routine)
     {
         Append(new WaitForXRoutine(routine));
         return this;
     }
 
-    private xRoutine(MonoBehaviour monoBehaviour)
+    private Xroutine(MonoBehaviour monoBehaviour)
     {
         if(monoBehaviour != null)
         {
