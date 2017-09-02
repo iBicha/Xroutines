@@ -157,6 +157,15 @@ public class Xroutine {
 		return this;
 	}
 
+	public Xroutine WaitForXroutine(params Xroutine[] routines)
+	{
+		for (int i = 0; i < routines.Length; i++)
+		{
+			WaitForXroutine(routines[i]);
+		}
+		return this;
+	}
+
     private Xroutine(MonoBehaviour monoBehaviour)
     {
         if(monoBehaviour != null)
