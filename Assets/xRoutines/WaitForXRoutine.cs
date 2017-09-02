@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class WaitForXRoutine : CustomYieldInstruction
+public class WaitForXroutine : CustomYieldInstruction
 {
     private Xroutine routine;
 
-	public WaitForXRoutine(Xroutine routine)
+	public WaitForXroutine(Xroutine routine)
     {
         this.routine = routine;
     }

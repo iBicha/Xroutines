@@ -150,12 +150,12 @@ public class Xroutine {
         Append(new WaitForMouseDown(button));
         return this;
     }
-
-    public Xroutine WaitForXRoutine(Xroutine routine)
-    {
-        Append(new WaitForXRoutine(routine));
-        return this;
-    }
+		
+	public Xroutine WaitForXroutine(Xroutine routine)
+	{
+		Append(new WaitForXroutine(routine));
+		return this;
+	}
 
     private Xroutine(MonoBehaviour monoBehaviour)
     {
