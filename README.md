@@ -1,10 +1,10 @@
-# xRoutines
+# Xroutines
 A mini framework to better use coroutines in Unity.
 Easy, chainable actions , based on coroutines.
 
 ### Usage
 
-With xRoutines you can:
+With Xroutines you can:
 
  * Chain actions
  * You don't have to deal with `IEnumerator` or any `yield` instructions (If you don't want to, you still can)
@@ -16,7 +16,7 @@ And here's some sample code:
 
 ```javascript
 void Start () {
-    xRoutine routine = xRoutine.Create()
+    Xroutine routine = Xroutine.Create()
         .Append(RoutineMethod1())
         .WaitForSeconds(0.25f)
         .Append(RoutineMethod2)
@@ -38,9 +38,9 @@ void RoutineMethod2()
 }
 ```
 
-You can check `Assets/xRoutines/Example` for more options.
+You can check `Assets/Xroutines/Example` for more options.
 
 ### Contribution:
 
 PRs and issues are always welcome.
-If you think you have an idea for a `CustomYieldInstruction` that can be useful, please contribute, so we can have a library of most common yield instructions and have them built-in xRoutines
+If you think you have an idea for a `CustomYieldInstruction` that can be useful, please contribute, so we can have a library of most common yield instructions and have them built-in Xroutines
