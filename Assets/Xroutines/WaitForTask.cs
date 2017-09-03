@@ -25,13 +25,6 @@ public class WaitForTask : IEnumerator
 	}
 
 	public void execute(object state){
-		if (threaded) {
-			lock (objLock) {
-				started = true;
-			}
-		} else {
-			started = true;
-		}
 		for (int i = 0; i < actions.Length; i++) {
 			actions[i].Invoke ();
 		}
@@ -61,6 +54,7 @@ public class WaitForTask : IEnumerator
 	public bool MoveNext ()
 	{
 		if (!this.started) {
+			this.started = true;
 			if (this.threaded) {
 				ThreadPool.QueueUserWorkItem (new WaitCallback (execute));
 			} else {
