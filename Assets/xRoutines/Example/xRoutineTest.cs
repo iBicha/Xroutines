@@ -5,39 +5,44 @@ public class XroutineTest : MonoBehaviour {
 
 	void Start () {
         //create a routine, and chain actions on it
-		Xroutine routine = Xroutine.Create()
-            .Append(RoutineMethod1())
+		Xroutine routine = Xroutine.Create(this)
+			.WaitFor(RoutineMethod1())
             .WaitForSeconds(0.25f)
-            .Append(RoutineMethod2)
+			.WaitFor(RoutineMethod2)
             .WaitForSeconds(0.25f);
         //You can decide to add stuff later.
         routine.WaitForSecondsRealtime(0.25f)
             //You can also add multiple methods to execute. They will still run one after the other
-            .Append(RoutineMethod1(), RoutineMethod1())
-            .Append(RoutineMethod2, RoutineMethod2)
+			.WaitFor(RoutineMethod1(), RoutineMethod1())
+			.WaitFor(false, RoutineMethod2, RoutineMethod2)
             .WaitForFixedUpdate()
             //You can also add yield instructions like this
-            .Append(new WaitForSecondsRealtime(0.2f))
-            .Append(new WaitForSeconds(0.3f))
-            .Append(() => { Debug.Log("Execute code on the fly!"); })
-            .Append(() => { Debug.Log("Press Enter to continue..."); })
+			.WaitFor(new WaitForSecondsRealtime(0.2f))
+			.WaitFor(new WaitForSeconds(0.3f))
+			.WaitFor(() => { Debug.Log("Execute code on the fly!"); })
+			.WaitFor(() => { Debug.Log("Press Enter to continue..."); })
             .WaitForKeyDown(KeyCode.Return)
-            .Append(() => { Debug.Log("Thanks!"); })
-            .Append(() => { Debug.Log("Left click to continue..."); })
+			.WaitFor(() => { Debug.Log("Thanks!"); })
+			.WaitFor(() => { Debug.Log("Left click to continue..."); })
             .WaitForMouseDown(0)
-            .Append(() => { Debug.Log("Thanks again!"); })
-            .Append(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); })
-            .Append(() => { Debug.Log("We are going to stop now."); })
+			.WaitFor(() => { Debug.Log("Thanks again!"); })
+			.WaitFor(() => { 
+				Debug.Log("Sleeping for 3 seconds on background thread..."); 
+				System.Threading.Thread.Sleep(3000); 
+				Debug.Log("Done Sleeping"); 
+			}, true)
+			.WaitFor(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); })
+			.WaitFor(() => { Debug.Log("We are going to stop now."); })
             //I will stop it here
             //I can call Stop() from anywhere else for immediate interruption.
-            .Append(() => { routine.Stop(); })
-            .Append(() => { Debug.Log("This will not be executed"); });
+			.WaitFor(() => { routine.Stop(); })
+			.WaitFor(() => { Debug.Log("This will not be executed"); });
 
         //We can even start another routine, and wait for the previous one to finish.
 		Xroutine.Create()
             .WaitForXroutine(routine)
-            .Append(() => { Debug.Log("Routine just finished executing."); })
-            .Append(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); });
+			.WaitFor(() => { Debug.Log("Routine just finished executing."); })
+			.WaitFor(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); });
 
         //Note: if you call WaitForXRoutine on itself, it will running a task of checking if that task is done. Which will never be.
         //In other words, calling WaitForXRoutine on itself blocks the routine, until Stop() is called somewhere else.
@@ -50,6 +55,7 @@ public class XroutineTest : MonoBehaviour {
         yield return new WaitForSeconds(0.1f);
         yield return null;
     }
+
     //this is just a method returning void, that we can also use with coroutines
     void RoutineMethod2()
     {

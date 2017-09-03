@@ -10,6 +10,7 @@ With Xroutines you can:
  * You don't have to deal with `IEnumerator` or any `yield` instructions (If you don't want to, you still can)
  * You can use helper functions to wait for conditions quickly (`WaitForMouseDown`, `WaitForKeyDown`, etc)
  * You can add inline `Action` delegate methods 
+ * Threading! `Action` delegate methods can run on background thread if they are too expensive for main thread.
  * Use `Stop()` to stop it
 
 And here's some sample code:
@@ -17,11 +18,17 @@ And here's some sample code:
 ```javascript
 void Start () {
     Xroutine routine = Xroutine.Create()
-        .Append(RoutineMethod1())
+        .WaitFor(RoutineMethod1())
         .WaitForSeconds(0.25f)
-        .Append(RoutineMethod2)
+        .WaitFor(RoutineMethod2)
         .WaitForSeconds(0.25f)
-        .Append(() => { Debug.Log("Execute code on the fly!"); });
+        .WaitFor(() => { Debug.Log("Execute code on the fly!"); });
+        .WaitFor(() => { 
+            Debug.Log("Sleeping for 3 seconds on background thread..."); 
+            System.Threading.Thread.Sleep(3000); 
+            Debug.Log("Done Sleeping"); 
+        }, true); // <=== true for background thread
+
 }
 
 //This is an enumerator method, that we can use with coroutines as usual

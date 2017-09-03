@@ -2,18 +2,18 @@
 
 public class WaitForXroutine : CustomYieldInstruction
 {
-    private Xroutine routine;
+    private Xroutine xroutine;
 
-	public WaitForXroutine(Xroutine routine)
+	public WaitForXroutine(Xroutine xroutine)
     {
-        this.routine = routine;
+        this.xroutine = xroutine;
     }
 
     public override bool keepWaiting
     {
         get
         {
-            return routine.IsRunning;
+            return xroutine.IsRunning;
         }
     }
 

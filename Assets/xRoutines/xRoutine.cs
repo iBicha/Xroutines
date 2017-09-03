@@ -44,129 +44,151 @@ public class Xroutine {
         }
     }
 
+	#region WaitFor aliases
+
+	public Xroutine WaitFor(IEnumerator routine)
+	{
+		return WaitForRoutine (routine);
+	}
+
+	public Xroutine WaitFor(params IEnumerator[] routines)
+	{
+		for (int i = 0; i < routines.Length; i++)
+		{
+			WaitFor(routines[i]);
+		}
+		return this;
+	}
+
+	public Xroutine WaitFor(Action action, bool threaded = false)
+	{
+		return WaitForTask (action, threaded);
+	}
+
+	public Xroutine WaitFor(bool threaded = false, params Action[] actions)
+	{
+		return WaitForTasks (threaded, actions);
+	}
+
+	public Xroutine WaitFor(YieldInstruction instruction)
+	{
+		return WaitForYieldInstruction (instruction);
+	}
+
+	public Xroutine WaitFor(params YieldInstruction[] instructions)
+	{
+		for (int i = 0; i < instructions.Length; i++)
+		{
+			WaitFor (instructions[i]);
+		}
+		return this;
+	}
+
+	public Xroutine WaitFor(Xroutine xroutine)
+	{
+		return WaitForXroutine (xroutine);
+	}
+
+	public Xroutine WaitFor(params Xroutine[] xroutines)
+	{
+		for (int i = 0; i < xroutines.Length; i++)
+		{
+			WaitFor (xroutines[i]);
+		}
+		return this;
+	}
+
+	#endregion
+
     public static Xroutine Create(MonoBehaviour monoBehaviour = null)
     {
         return new Xroutine(monoBehaviour);
     }
 
-    public void Stop()
-    {
-        MonoBehaviour.StopCoroutine(coroutine);
-        queue.Clear();
-        isRunning = false;
-    }
-
-    public Xroutine Append(params IEnumerator[] routines)
-    {
-        for (int i = 0; i < routines.Length; i++)
-        {
-            Append(routines[i]);
-        }
-        return this;
-    }
-
-    public Xroutine Append(IEnumerator routine)
-    {
-        queue.Enqueue(routine);
-        if (!isRunning)
-        {
-            coroutine = MonoBehaviour.StartCoroutine(routineMain());
-            isRunning = true;
-        }
-        return this;
-    }
-
-
-    public Xroutine Append(YieldInstruction yieldInstruction)
-    {
-        Append(routineYieldInstruction(yieldInstruction));
-        return this;
-    }
-
-    public Xroutine Append(params Action[] actions)
-    {
-        for (int i = 0; i < actions.Length; i++)
-        {
-            Append(actions[i]);
-        }
-        return this;
-    }
-
-    public Xroutine Append(Action action)
-    {
-        Append(routineAction(action));
-        return this;
-    }
-
-    public Xroutine WaitForSeconds(float seconds)
-    {
-        Append(routineYieldInstruction(new WaitForSeconds(seconds)));
-        return this;
-    }
-    public Xroutine WaitForSecondsRealtime(float seconds)
-    {
-        Append(new WaitForSecondsRealtime(seconds));
-        return this;
-    }
-
-    public Xroutine WaitForEndOfFrame()
-    {
-        Append(routineYieldInstruction(new WaitForEndOfFrame()));
-        return this;
-    }
-
-    public Xroutine WaitForFixedUpdate()
-    {
-        Append(routineYieldInstruction(new WaitForFixedUpdate()));
-        return this;
-    }
-
-    public Xroutine WaitWhile(Func<bool> predicate)
-    {
-        Append(new WaitWhile(predicate));
-        return this;
-    }
-
-    public Xroutine WaitUntil(Func<bool> predicate)
-    {
-        Append(new WaitUntil(predicate));
-        return this;
-    }
-
-    public Xroutine WaitForKeyDown(string name)
-    {
-        Append(new WaitForKeyDown(name));
-        return this;
-    }
-
-    public Xroutine WaitForKeyDown(KeyCode key)
-    {
-        Append(new WaitForKeyDown(key));
-        return this;
-    }
-
-    public Xroutine WaitForMouseDown(int button)
-    {
-        Append(new WaitForMouseDown(button));
-        return this;
-    }
-		
-	public Xroutine WaitForXroutine(Xroutine routine)
+	public void Stop()
 	{
-		Append(new WaitForXroutine(routine));
-		return this;
+		MonoBehaviour.StopCoroutine(coroutine);
+		queue.Clear();
+		isRunning = false;
 	}
 
-	public Xroutine WaitForXroutine(params Xroutine[] routines)
+	public Xroutine WaitForEndOfFrame()
 	{
-		for (int i = 0; i < routines.Length; i++)
+		return WaitForYieldInstruction (new WaitForEndOfFrame ());
+	}
+
+	public Xroutine WaitForFixedUpdate()
+	{
+		return WaitForYieldInstruction (new WaitForFixedUpdate ());
+	}
+		
+	public Xroutine WaitForKeyDown(string name)
+	{
+		return WaitForRoutine(new WaitForKeyDown(name));
+	}
+
+	public Xroutine WaitForKeyDown(KeyCode key)
+	{
+		return WaitForRoutine(new WaitForKeyDown(key));
+	}
+
+	public Xroutine WaitForMouseDown(int button)
+	{
+		return WaitForRoutine(new WaitForMouseDown(button));
+	}
+
+	public Xroutine WaitForRoutine(IEnumerator routine)
+	{
+		queue.Enqueue(routine);
+		if (!isRunning)
 		{
-			WaitForXroutine(routines[i]);
+			coroutine = MonoBehaviour.StartCoroutine(routineMain());
+			isRunning = true;
 		}
 		return this;
 	}
 
-    private Xroutine(MonoBehaviour monoBehaviour)
+	public Xroutine WaitForSeconds(float seconds)
+	{
+		return WaitForYieldInstruction (new WaitForSeconds (seconds));
+	}
+
+	public Xroutine WaitForSecondsRealtime(float seconds)
+	{
+		return WaitForRoutine(new WaitForSecondsRealtime(seconds));
+	}
+
+	public Xroutine WaitForTask(Action action, bool threaded = false)
+	{
+		return WaitForRoutine(new WaitForTask(threaded, action));
+	}
+
+	public Xroutine WaitForTasks(bool threaded = false, params Action[] actions)
+	{
+		return WaitForRoutine(new WaitForTask(threaded, actions));
+	}
+
+	public Xroutine WaitForXroutine(Xroutine xroutine)
+	{
+		return WaitForRoutine(new WaitForXroutine(xroutine));
+	}
+
+	public Xroutine WaitForYieldInstruction(YieldInstruction yieldInstruction)
+	{
+		return WaitForRoutine(routineYieldInstruction(yieldInstruction));
+	}
+
+	public Xroutine WaitUntil(Func<bool> predicate)
+	{
+		return WaitForRoutine(new WaitUntil(predicate));
+	}
+
+	public Xroutine WaitWhile(Func<bool> predicate)
+	{
+		return WaitForRoutine(new WaitWhile(predicate));
+	}
+
+	private Xroutine(MonoBehaviour monoBehaviour)
     {
         if(monoBehaviour != null)
         {
@@ -175,13 +197,7 @@ public class Xroutine {
         }
         queue = new Queue<IEnumerator>();
     }
-
-    private IEnumerator routineAction(Action action)
-    {
-        action.Invoke();
-        yield return null;
-    }
-
+		
     private IEnumerator routineYieldInstruction(YieldInstruction yieldInstruction)
     {
         yield return yieldInstruction;
