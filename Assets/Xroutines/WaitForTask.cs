@@ -12,6 +12,8 @@ public class WaitForTask : IEnumerator
 	private bool threaded;
 
 	private Action[] actions;
+
+	private Thread backgroundThread;
 	public WaitForTask(bool threaded = false,params Action[] actions)
 	{
 		this.started = false;
@@ -25,6 +27,11 @@ public class WaitForTask : IEnumerator
 	}
 
 	public void execute(object state){
+		if (threaded) {
+			lock (objLock) {
+				backgroundThread = Thread.CurrentThread;
+			}
+		} 
 		for (int i = 0; i < actions.Length; i++) {
 			actions[i].Invoke ();
 		}
@@ -35,6 +42,20 @@ public class WaitForTask : IEnumerator
 		} else {
 			done = true;
 		}
+	}
+
+	public void Stop() {
+		if (!threaded) {
+			return;
+		}
+		lock (objLock) {
+			if (!done && backgroundThread != null && backgroundThread.IsAlive) {
+				backgroundThread.Abort();
+				backgroundThread = null;
+				done = true;
+			}
+		}
+
 	}
 
 	public bool keepWaiting

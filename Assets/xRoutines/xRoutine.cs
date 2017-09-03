@@ -7,7 +7,8 @@ public class Xroutine {
     private static MonoBehaviour s_monoBehaviour;
     private MonoBehaviour m_monoBehaviour;
     private bool useStaticMonoBehaviour = true;
-    private Queue<IEnumerator> queue;
+	private Queue<IEnumerator> queue;
+	private IEnumerator current;
     private bool isRunning = false;
     private Coroutine coroutine;
 
@@ -110,6 +111,9 @@ public class Xroutine {
 		MonoBehaviour.StopCoroutine(coroutine);
 		queue.Clear();
 		isRunning = false;
+		if (current.GetType () == typeof(WaitForTask)) {
+			((WaitForTask)current).Stop ();
+		}
 	}
 
 	public Xroutine WaitForEndOfFrame()
@@ -207,8 +211,8 @@ public class Xroutine {
     {
         while (queue.Count > 0)
         {
-            IEnumerator routine = queue.Dequeue();
-            yield return routine;
+			current = queue.Dequeue();
+			yield return current;
         }
         isRunning = false;
     }
