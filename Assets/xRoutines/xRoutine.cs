@@ -76,6 +76,11 @@ public class Xroutine {
 		return WaitForAnimation(animation);
 	}
 
+	public Xroutine WaitFor(AudioSource audioSource)
+	{
+		return WaitForAudioSource(audioSource);
+	}
+
 	public Xroutine WaitFor(YieldInstruction instruction)
 	{
 		return WaitForYieldInstruction (instruction);
@@ -124,6 +129,11 @@ public class Xroutine {
 	public Xroutine WaitForAnimation(Animation animation)
 	{
 		return WaitForRoutine (new WaitForAnimation (animation));
+	}
+
+	public Xroutine WaitForAudioSource(AudioSource audioSource)
+	{
+		return WaitForRoutine (new WaitForAudioSource (audioSource));
 	}
 
 	public Xroutine WaitForEndOfFrame()
