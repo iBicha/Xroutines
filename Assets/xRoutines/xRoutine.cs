@@ -71,6 +71,11 @@ public class Xroutine {
 		return WaitForTasks (threaded, actions);
 	}
 
+	public Xroutine WaitFor(Animation animation)
+	{
+		return WaitForAnimation(animation);
+	}
+
 	public Xroutine WaitFor(YieldInstruction instruction)
 	{
 		return WaitForYieldInstruction (instruction);
@@ -114,6 +119,11 @@ public class Xroutine {
 		if (current.GetType () == typeof(WaitForTask)) {
 			((WaitForTask)current).Stop ();
 		}
+	}
+
+	public Xroutine WaitForAnimation(Animation animation)
+	{
+		return WaitForRoutine (new WaitForAnimation (animation));
 	}
 
 	public Xroutine WaitForEndOfFrame()
