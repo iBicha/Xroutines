@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Xroutine {
     private static MonoBehaviour s_monoBehaviour;
@@ -91,7 +92,12 @@ public class Xroutine {
         return WaitForCollision2D(collider2d);
     }
 
-	public Xroutine WaitFor(YieldInstruction instruction)
+    public Xroutine WaitFor(UnityEvent unityEvent)
+    {
+        return WaitForEvent(unityEvent);
+    }
+
+    public Xroutine WaitFor(YieldInstruction instruction)
 	{
 		return WaitForYieldInstruction (instruction);
 	}
@@ -160,6 +166,11 @@ public class Xroutine {
 	{
 		return WaitForYieldInstruction (new WaitForEndOfFrame ());
 	}
+
+    public Xroutine WaitForEvent(UnityEvent unityEvent)
+    {
+        return WaitForRoutine(new WaitForEvent(unityEvent));
+    }
 
 	public Xroutine WaitForFixedUpdate()
 	{
