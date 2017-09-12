@@ -9,6 +9,7 @@ With Xroutines you can:
  * Chain actions
  * You don't have to deal with `IEnumerator` or any `yield` instructions (If you don't want to, you still can)
  * You can use helper functions to wait for conditions quickly (`WaitForMouseDown`, `WaitForKeyDown`, etc)
+     * You can Wait for mouse clicks, keyboard, animations and audio sources to finish playing, collisions, unity events to be fired and so on. This list of possible routines is constantly updated.
  * You can add inline `Action` delegate methods 
  * Threading! `Action` delegate methods can run on background thread if they are too expensive for main thread.
  * Use `Stop()` to stop it
