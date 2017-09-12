@@ -81,6 +81,16 @@ public class Xroutine {
 		return WaitForAudioSource(audioSource);
 	}
 
+    public Xroutine WaitFor(Collider collider)
+    {
+        return WaitForCollision(collider);
+    }
+
+    public Xroutine WaitFor(Collider2D collider2d)
+    {
+        return WaitForCollision2D(collider2d);
+    }
+
 	public Xroutine WaitFor(YieldInstruction instruction)
 	{
 		return WaitForYieldInstruction (instruction);
@@ -135,6 +145,16 @@ public class Xroutine {
 	{
 		return WaitForRoutine (new WaitForAudioSource (audioSource));
 	}
+
+    public Xroutine WaitForCollision(Collider collider)
+    {
+        return WaitForRoutine(new WaitForCollision(collider));
+    }
+
+    public Xroutine WaitForCollision2D(Collider2D collider2d)
+    {
+        return WaitForRoutine(new WaitForCollision(collider2d));
+    }
 
 	public Xroutine WaitForEndOfFrame()
 	{
