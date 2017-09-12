@@ -16,10 +16,12 @@ public class WaitForTask : IEnumerator
 	private Thread backgroundThread;
 	public WaitForTask(bool threaded = false,params Action[] actions)
 	{
-		this.started = false;
-		this.done = false;
-		//TODO: check for platform, set threaded to false if not supported
-		this.threaded = threaded;
+#if UNITY_WEBGL
+        threaded = false;
+#endif
+        this.started = false;
+        this.done = false;
+        this.threaded = threaded;
 		this.actions = actions;
 		if (threaded) {
 			this.objLock = new object ();
