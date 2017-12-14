@@ -34,7 +34,7 @@ public class XroutineTest : MonoBehaviour {
 			.WaitFor(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); })
 			.WaitFor(() => { Debug.Log("We are going to stop now."); })
             //I will stop it here
-            //I can call Stop() from anywhere else for immediate interruption.
+            //I can call Abort() from anywhere else for immediate interruption.
 			.WaitFor(() => { routine.Stop(); })
 			.WaitFor(() => { Debug.Log("This will not be executed"); });
 

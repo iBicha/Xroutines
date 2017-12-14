@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Xroutine {
     private static MonoBehaviour s_monoBehaviour;
@@ -82,6 +83,11 @@ public class Xroutine {
 		return WaitForAudioSource(audioSource);
 	}
 
+    public Xroutine WaitFor(Button button)
+    {
+        return WaitForButtonClick(button);
+    }
+
     public Xroutine WaitFor(Collider collider)
     {
         return WaitForCollision(collider);
@@ -132,17 +138,24 @@ public class Xroutine {
         return new Xroutine(monoBehaviour);
     }
 
+    [Obsolete("Method Stop() has been deprecated. Use Abort() instead.")]
 	public void Stop()
 	{
-		MonoBehaviour.StopCoroutine(coroutine);
-		queue.Clear();
-		isRunning = false;
-		if (current.GetType () == typeof(WaitForTask)) {
-			((WaitForTask)current).Stop ();
-		}
+        Abort();
 	}
 
-	public Xroutine WaitForAnimation(Animation animation)
+    public void Abort()
+    {
+        MonoBehaviour.StopCoroutine(coroutine);
+        queue.Clear();
+        isRunning = false;
+        if (current.GetType() == typeof(WaitForTask))
+        {
+            ((WaitForTask)current).Stop();
+        }
+    }
+
+    public Xroutine WaitForAnimation(Animation animation)
 	{
 		return WaitForRoutine (new WaitForAnimation (animation));
 	}
@@ -151,6 +164,11 @@ public class Xroutine {
 	{
 		return WaitForRoutine (new WaitForAudioSource (audioSource));
 	}
+
+    public Xroutine WaitForButtonClick(Button button)
+    {
+        return WaitForRoutine(new WaitForEvent(button.onClick));
+    }
 
     public Xroutine WaitForCollision(Collider collider)
     {
