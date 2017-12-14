@@ -16,7 +16,7 @@ With Xroutines you can:
 
 And here's some sample code:
 
-```javascript
+```csharp
 void Start () {
     Xroutine routine = Xroutine.Create()
         .WaitFor(RoutineMethod1())
