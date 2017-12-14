@@ -145,6 +145,11 @@ public class Xroutine
         return new Xroutine(monoBehaviour);
     }
 
+    public static Xroutine Create(IEnumerator routine, MonoBehaviour monoBehaviour = null)
+    {
+        return new Xroutine(monoBehaviour).WaitFor(routine);
+    }
+
     [Obsolete("Method Stop() has been deprecated. Use Abort() instead.")]
     public void Stop()
     {
