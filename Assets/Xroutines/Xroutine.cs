@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Xroutine
+public class Xroutine : CustomYieldInstruction
 {
     private static MonoBehaviour s_monoBehaviour;
     private MonoBehaviour m_monoBehaviour;
@@ -42,6 +42,14 @@ public class Xroutine
     }
 
     public bool IsRunning
+    {
+        get
+        {
+            return isRunning;
+        }
+    }
+
+    public override bool keepWaiting
     {
         get
         {
