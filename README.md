@@ -2,8 +2,6 @@
 A mini framework to better use coroutines in Unity.
 Easy, chainable actions , based on coroutines.
 
-### Usage
-
 With Xroutines you can:
 
  * Chain actions
@@ -13,6 +11,8 @@ With Xroutines you can:
  * You can add inline `Action` delegate methods 
  * Threading! `Action` delegate methods can run on background thread if they are too expensive for main thread.
  * Use `Abort()` to stop it
+
+### Usage
 
 And here's some sample code:
 
