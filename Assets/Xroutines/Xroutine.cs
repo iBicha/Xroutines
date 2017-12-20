@@ -268,7 +268,7 @@ public class Xroutine : CustomYieldInstruction
 
     public Xroutine WaitForXroutine(Xroutine xroutine)
     {
-        return WaitForRoutine(new WaitForXroutine(xroutine));
+        return WaitForRoutine(xroutine);
     }
 
     public Xroutine WaitForYieldInstruction(YieldInstruction yieldInstruction)
