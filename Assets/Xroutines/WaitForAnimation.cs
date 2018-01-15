@@ -15,7 +15,10 @@ public class WaitForAnimation : CustomYieldInstruction
 	{
 		get
 		{
-			return animation.isPlaying;
+            if (animation == null)
+                return false;
+
+            return animation.isPlaying;
 		}
 	}
 }

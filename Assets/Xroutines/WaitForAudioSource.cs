@@ -15,6 +15,9 @@ public class WaitForAudioSource : CustomYieldInstruction
 	{
 		get
 		{
+            if (audioSource == null)
+                return false;
+
 			return audioSource.isPlaying;
 		}
 	}

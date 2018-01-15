@@ -91,6 +91,14 @@ public class WaitForCollision : CustomYieldInstruction
         {
             OnCollision();
         }
+
+        //In case the Collider got destroyed, we're just going to fire up this event 
+        //so the routine won't get stuck forever waiting for a collision on a deleted collider 
+        private void OnDestroy()
+        {
+            Debug.LogWarning("Xroutine waiting on a deleted collider. Skipping routine.");
+            OnCollision();
+        }
     }
 
 }
