@@ -22,8 +22,10 @@ public class XroutineTest : MonoBehaviour {
 			.WaitFor(() => { Debug.Log("Execute code on the fly!"); })
 			.WaitFor(() => { Debug.Log("Press Enter to continue..."); })
             .WaitForKeyDown(KeyCode.Return)
-			.WaitFor(() => { Debug.Log("Thanks!"); })
-			.WaitFor(() => { Debug.Log("Left click to continue..."); })
+            .WaitFor(() => { Debug.Log("Thanks!"); })
+            //Waiting for 5 frames
+            .WaitForFrames(5)
+            .WaitFor(() => { Debug.Log("Left click to continue..."); })
             .WaitForMouseDown(0)
 			.WaitFor(() => { Debug.Log("Thanks again!"); })
 			.WaitFor(() => { 

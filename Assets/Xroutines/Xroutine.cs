@@ -205,6 +205,15 @@ public class Xroutine : CustomYieldInstruction
         return WaitForYieldInstruction(new WaitForEndOfFrame());
     }
 
+    public Xroutine WaitForFrames(int numberOfFrames)
+    {
+        for (int i = 0; i < numberOfFrames; i++)
+        {
+            WaitForEndOfFrame();
+        }
+        return this;
+    }
+
     public Xroutine WaitForEvent(UnityEvent unityEvent)
     {
         return WaitForRoutine(new WaitForEvent(unityEvent));
