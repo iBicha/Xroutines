@@ -278,7 +278,7 @@ public class Xroutine : CustomYieldInstruction
     public Xroutine WaitForXroutine(Xroutine xroutine)
     {
         if (xroutine == this)
-            Debug.LogWarning("Xroutine is waiting for itself to finish: will never resolve.");
+            Debug.LogWarning("Xroutine added to its own queue: Xroutine will be waiting for itself and will never resolve.");
         return WaitForRoutine(xroutine);
     }
 
