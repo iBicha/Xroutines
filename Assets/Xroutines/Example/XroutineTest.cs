@@ -46,7 +46,7 @@ public class XroutineTest : MonoBehaviour {
 			.WaitFor(() => { Debug.Log("Routine just finished executing."); })
 			.WaitFor(() => { Debug.Log(string.Format("Xroutine is still Running: {0}", routine.IsRunning)); });
 
-        //Note: if you call WaitForXRoutine on itself, it will running a task of checking if that task is done. Which will never be.
+        //Note: if you call WaitForXRoutine on itself, it will be running a task of checking if that task is done. Which will never be.
         //In other words, calling WaitForXRoutine on itself blocks the routine, until Stop() is called somewhere else.
     }
 
