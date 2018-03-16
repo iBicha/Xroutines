@@ -37,7 +37,7 @@ public class Xroutine : CustomYieldInstruction
         set
         {
             m_monoBehaviour = value;
-            useStaticMonoBehaviour = false;
+            useStaticMonoBehaviour = m_monoBehaviour == null;
         }
     }
 
@@ -299,11 +299,7 @@ public class Xroutine : CustomYieldInstruction
 
     private Xroutine(MonoBehaviour monoBehaviour)
     {
-        if (monoBehaviour != null)
-        {
-            this.m_monoBehaviour = monoBehaviour;
-            useStaticMonoBehaviour = false;
-        }
+        this.MonoBehaviour = monoBehaviour;
         queue = new Queue<IEnumerator>();
     }
 
